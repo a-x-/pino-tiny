@@ -50,6 +50,7 @@
     "compile": "tsc",
     "build": "yarn lint && yarn clean && yarn compile",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "prepublishOnly": "yarn build"
   }
 }
