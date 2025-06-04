@@ -1,0 +1,4 @@
+{"level":30,"time":1698765432123,"msg":"Test message with duplicate tags","tags":["info","custom","debug","important"]}
+{"level":30,"time":1698765432123,"msg":"Test message with only level tags","tags":["info","debug","error"]}
+{"level":30,"time":1698765432123,"msg":"Test message with mixed tags","tags":["custom","production","important"]}
+{"level":30,"time":1698765432123,"msg":"Test message without tags"} 

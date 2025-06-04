@@ -111,6 +111,47 @@ describe('pino-tiny logger', () => {
       expect(result).toContain('GET /api/test (200/150ms)')
     })
 
+    it('should filter tags that duplicate log level', () => {
+      const logWithDuplicateTags = {
+        ...mockLogData,
+        tags: ['info', 'custom', 'debug', 'important']
+      }
+      const options: PinoTinyOptions = { showObjects: true }
+      const result = format(logWithDuplicateTags, options)
+
+      // Should not contain level-duplicate tags
+      expect(result).not.toContain('["info"')
+      expect(result).not.toContain('["debug"')
+
+      // Should contain non-level tags
+      expect(result).toContain('["custom","important"]')
+    })
+
+    it('should hide tags completely if only level tags remain', () => {
+      const logWithOnlyLevelTags = {
+        ...mockLogData,
+        tags: ['info', 'debug', 'error']
+      }
+      const options: PinoTinyOptions = { showObjects: true }
+      const result = format(logWithOnlyLevelTags, options)
+
+      // Should not contain tags at all since all were level duplicates
+      expect(result).not.toContain('tags')
+      expect(result).not.toContain('["info"')
+    })
+
+    it('should keep non-array tags unchanged', () => {
+      const logWithStringTag = {
+        ...mockLogData,
+        tags: 'single-tag'
+      }
+      const options: PinoTinyOptions = { showObjects: true }
+      const result = format(logWithStringTag, options)
+
+      // Should keep string tags as-is
+      expect(result).toContain('"tags":"single-tag"')
+    })
+
     it('should apply custom message key', () => {
       const customData = {
         level: 30,

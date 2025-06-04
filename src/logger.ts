@@ -99,9 +99,26 @@ export function format (data: any, options: PinoTinyOptions = {}): string | unde
     }
 
     // Filter out standard fields
-    const additionalData = Object.fromEntries(
+    let additionalData = Object.fromEntries(
       Object.entries(data).filter(([key]) => !standardFields.includes(key))
     )
+
+    // Filter tags to remove duplicates of log levels
+    if (additionalData.tags != null && Array.isArray(additionalData.tags)) {
+      const levelTags = ['trace', 'debug', 'info', 'warn', 'warning', 'error', 'fatal']
+      const filteredTags = additionalData.tags.filter((tag: any) =>
+        typeof tag === 'string' && !levelTags.includes(tag.toLowerCase())
+      )
+
+      // Only keep tags if there are any non-level tags remaining
+      if (filteredTags.length > 0) {
+        additionalData = { ...additionalData, tags: filteredTags }
+      } else {
+        // Create new object without tags property
+        const { tags, ...dataWithoutTags } = additionalData
+        additionalData = dataWithoutTags
+      }
+    }
 
     // Only show additional data if there are any extra properties
     const additionalKeys = Object.keys(additionalData)
