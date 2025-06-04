@@ -91,22 +91,17 @@ export function format (data: any, options: PinoTinyOptions = {}): string | unde
 
   if (options.showObjects ?? false) {
     // Create a copy of data without standard pino fields to show additional properties
-    const additionalData = { ...data }
-    delete additionalData.level
-    delete additionalData.time
-    delete additionalData.pid
-    delete additionalData.hostname
-    delete additionalData.msg
-    delete additionalData.message
-    delete additionalData.req
-    delete additionalData.res
-    delete additionalData.responseTime
-    delete additionalData.v
-    
-    // Also delete custom message key if it's different from standard ones
+    const standardFields = ['level', 'time', 'pid', 'hostname', 'msg', 'message', 'req', 'res', 'responseTime', 'v']
+
+    // Add custom message key to standard fields if it's different from default ones
     if (msgKey !== 'msg' && msgKey !== 'message') {
-      delete additionalData[msgKey]
+      standardFields.push(msgKey)
     }
+
+    // Filter out standard fields
+    const additionalData = Object.fromEntries(
+      Object.entries(data).filter(([key]) => !standardFields.includes(key))
+    )
 
     // Only show additional data if there are any extra properties
     const additionalKeys = Object.keys(additionalData)

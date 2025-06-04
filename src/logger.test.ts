@@ -87,14 +87,14 @@ describe('pino-tiny logger', () => {
     it('should filter standard pino fields from showObjects output', () => {
       const options: PinoTinyOptions = { showObjects: true }
       const result = format(mockLogData, options)
-      
+
       // Should not contain standard pino fields
       expect(result).not.toContain('"level"')
       expect(result).not.toContain('"time"')
       expect(result).not.toContain('"pid"')
       expect(result).not.toContain('"hostname"')
       expect(result).not.toContain('"msg"')
-      
+
       // Should contain additional fields
       expect(result).toContain('"userId":"123"')
     })
@@ -106,7 +106,7 @@ describe('pino-tiny logger', () => {
         res: { statusCode: 200 },
         responseTime: 150
       }
-      
+
       const result = format(webLogData)
       expect(result).toContain('GET /api/test (200/150ms)')
     })
@@ -142,7 +142,7 @@ describe('pino-tiny logger', () => {
 
     it('should apply filter function', () => {
       const options: PinoTinyOptions = {
-        filter: (data) => ({ ...data, msg: '[FILTERED] ' + data.msg })
+        filter: (data) => ({ ...data, msg: `[FILTERED] ${String(data.msg)}` })
       }
       const result = format(mockLogData, options)
       expect(result).toContain('[FILTERED] Test message')
@@ -156,4 +156,4 @@ describe('pino-tiny logger', () => {
       expect(result).toBeUndefined()
     })
   })
-}) 
+})
