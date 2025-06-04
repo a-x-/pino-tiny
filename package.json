@@ -1,9 +1,9 @@
 {
   "name": "pino-tiny",
   "version": "2.3.0",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "bin": {
-    "pino-tiny": "dist/index.js"
+    "pino-tiny": "dist/src/index.js"
   },
   "repository": {
     "type": "git",
