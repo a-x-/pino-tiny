@@ -2,7 +2,7 @@ import Split from 'split2'
 import Through from 'through2'
 import Pump from 'pump'
 import Files from 'fs'
-import Chalk from 'chalk'
+import Chalk, { type ChalkInstance } from 'chalk'
 import DateFormat from 'dateformat'
 import { PinoTinyOptions } from '.'
 import StripAnsi from 'strip-ansi'
@@ -10,7 +10,7 @@ import StripAnsi from 'strip-ansi'
 interface Level {
   letters: string
   icon: string
-  color: Chalk.Chalk
+  color: ChalkInstance
 }
 
 interface Levels {[key: number]: Level}
@@ -80,7 +80,8 @@ export function format (data: any, options: PinoTinyOptions = {}): string | unde
   }
 
   if (!(options.hideTimestamp ?? false)) {
-    parts.push(Chalk.dim(DateFormat(data.time, 'HH:MM:ss.l')))
+    const timeFormat = (options.hideMs ?? false) ? 'HH:MM:ss' : 'HH:MM:ss.l'
+    parts.push(Chalk.dim(DateFormat(data.time, timeFormat)))
   }
 
   parts.push(data.msg ?? data.message)
