@@ -40,6 +40,7 @@ Options:
       --hide-ms         Hide milliseconds in timestamp.
   -c, --hide-colors     Remove ansi colors from output.
   -w, --hide-web        Hide web stats.
+  -o, --show-objects    Show additional object data from logs.
   -m, --msg-key         The key to use for message from the JSON log data.
 ```
 
@@ -88,6 +89,7 @@ PinoTinyOptions {
   hideColors?: boolean
   hideWeb?: boolean
   hideMs?: boolean
+  showObjects?: boolean
   msgKey?: string
   filter?: (data: any) => any | undefined
 }

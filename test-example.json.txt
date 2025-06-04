@@ -1,0 +1,3 @@
+{"level":30,"time":1698765432123,"pid":12345,"hostname":"localhost","msg":"User logged in","userId":"123","userEmail":"test@example.com","sessionId":"abc123","action":"login"}
+{"level":50,"time":1698765432789,"pid":12345,"hostname":"localhost","msg":"Database connection failed","database":"postgres","host":"db.example.com","port":5432,"error":"connection timeout"} 
+{"level":40,"time":1698765432456,"pid":12345,"hostname":"localhost","msg":"Warning: API rate limit approaching","endpoint":"/api/users","remaining":5,"resetTime":"2023-10-31T10:30:00Z"}

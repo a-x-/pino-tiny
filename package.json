@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/dateformat": "^3.0.1",
-    "@types/node": "^16.7.10",
+    "@types/node": "^20.0.0",
     "@types/pump": "^1.1.1",
     "@types/split2": "^3.2.1",
     "@types/through2": "^2.0.36",
@@ -41,12 +41,15 @@
     "@typescript-eslint/parser": "^4.30.0",
     "eslint": "^7.32.0",
     "ts-standard": "^10.0.0",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "vitest": "^1.0.0"
   },
   "scripts": {
     "lint": "ts-standard src/**/*.ts",
     "clean": "rm -rf dist/",
     "compile": "tsc",
-    "build": "yarn lint && yarn clean && yarn compile"
+    "build": "yarn lint && yarn clean && yarn compile",
+    "test": "vitest",
+    "test:run": "vitest run"
   }
 }

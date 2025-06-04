@@ -84,9 +84,39 @@ export function format (data: any, options: PinoTinyOptions = {}): string | unde
     parts.push(Chalk.dim(DateFormat(data.time, timeFormat)))
   }
 
-  parts.push(data.msg ?? data.message)
+  // Use custom message key if provided, otherwise fallback to msg or message
+  const msgKey = options.msgKey ?? 'msg'
+  const message = data[msgKey] ?? data.msg ?? data.message
+  parts.push(message)
 
-  if (!(options.hideTimestamp ?? false) && data.res != null && data.req != null) {
+  if (options.showObjects ?? false) {
+    // Create a copy of data without standard pino fields to show additional properties
+    const additionalData = { ...data }
+    delete additionalData.level
+    delete additionalData.time
+    delete additionalData.pid
+    delete additionalData.hostname
+    delete additionalData.msg
+    delete additionalData.message
+    delete additionalData.req
+    delete additionalData.res
+    delete additionalData.responseTime
+    delete additionalData.v
+    
+    // Also delete custom message key if it's different from standard ones
+    if (msgKey !== 'msg' && msgKey !== 'message') {
+      delete additionalData[msgKey]
+    }
+
+    // Only show additional data if there are any extra properties
+    const additionalKeys = Object.keys(additionalData)
+    if (additionalKeys.length > 0) {
+      const objectStr = JSON.stringify(additionalData, null, 0)
+      parts.push(Chalk.gray(objectStr))
+    }
+  }
+
+  if (!(options.hideWeb ?? false) && data.res != null && data.req != null) {
     parts.push(Chalk.dim(`${data.req.method as string} ${data.req.url as string} (${data.res.statusCode as string}${data.responseTime != null ? `/${(data.responseTime as number).toLocaleString()}ms` : ''})`))
   }
 

@@ -10,6 +10,7 @@ export interface PinoTinyOptions {
   hideColors?: boolean
   hideWeb?: boolean
   hideMs?: boolean
+  showObjects?: boolean
   msgKey?: string
   filter?: (data: any) => any | undefined
 }
@@ -22,6 +23,7 @@ function run (filter?: (data: any) => any | undefined): void {
     c: { type: 'boolean', default: false, alias: 'hide-colors', description: 'Remove ansi colors from output.' },
     w: { type: 'boolean', default: false, alias: 'hide-web', description: 'Hide web stats.' },
     ms: { type: 'boolean', default: false, alias: 'hide-ms', description: 'Hide milliseconds in timestamp.' },
+    o: { type: 'boolean', default: false, alias: 'show-objects', description: 'Show additional object data from logs.' },
     m: { type: 'string', default: 'msg', alias: 'msg-key', description: 'The key to use for message from the JSON log data.' }
   }).parseSync()
   const cliOptions: PinoTinyOptions = {
@@ -31,7 +33,8 @@ function run (filter?: (data: any) => any | undefined): void {
     hideColors: argv.c,
     msgKey: argv.m,
     hideWeb: argv.w,
-    hideMs: argv.ms
+    hideMs: argv.ms,
+    showObjects: argv.o
   }
   if (filter != null) cliOptions.filter = filter
   start(cliOptions)
