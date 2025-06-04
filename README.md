@@ -11,9 +11,13 @@ This is an enhanced version of the original [pino-tiny](https://github.com/holmo
 - 📊 **Object inspection** with `--show-objects` flag
 - 🏷️ **Smart tag filtering** to eliminate redundant log level duplicates
 
-yeah, i know, [pino-colada](https://github.com/lrlna/pino-colada)...
+---
 
-...but is does some weird black box stuff, and i did not like some of the formatting, and i was generally not too happy about certain things, so...
+## 📦 Original README
+
+Yeah, i know, [pino-colada](https://github.com/lrlna/pino-colada)...
+
+...but it does some weird black box stuff, and i did not like some of the formatting, and i was generally not too happy about certain things, so...
 
 i made pino-tiny!
 
