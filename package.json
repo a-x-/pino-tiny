@@ -1,6 +1,6 @@
 {
   "name": "@invntrm/pino-tiny",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "main": "dist/src/index.js",
   "bin": {
     "pino-tiny": "dist/src/index.js"
