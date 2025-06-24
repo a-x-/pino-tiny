@@ -91,7 +91,7 @@ export function format (data: any, options: PinoTinyOptions = {}): string | unde
 
   if (options.showObjects ?? false) {
     // Create a copy of data without standard pino fields to show additional properties
-    const standardFields = ['level', 'time', 'pid', 'hostname', 'msg', 'message', 'req', 'res', 'responseTime', 'v']
+    const standardFields = ['level', 'time', 'pid', 'hostname', 'msg', 'message', 'req', 'res', 'responseTime', 'v', 'loggerName']
 
     // Add custom message key to standard fields if it's different from default ones
     if (msgKey !== 'msg' && msgKey !== 'message') {

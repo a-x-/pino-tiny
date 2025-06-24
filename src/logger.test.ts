@@ -36,14 +36,14 @@ describe('pino-tiny logger', () => {
       expect(result).toContain('INF')
       expect(result).toContain('ℹ️')
       expect(result).toContain('Test message')
-      expect(result).toContain('18:17:12.123')
+      expect(result).toContain('16:17:12.123')
     })
 
     it('should hide milliseconds when hideMs is true', () => {
       const options: PinoTinyOptions = { hideMs: true }
       const result = format(mockLogData, options)
-      expect(result).toContain('18:17:12')
-      expect(result).not.toContain('18:17:12.123')
+      expect(result).toContain('16:17:12')
+      expect(result).not.toContain('16:17:12.123')
     })
 
     it('should show objects when showObjects is true', () => {
@@ -80,7 +80,7 @@ describe('pino-tiny logger', () => {
     it('should hide timestamp when hideTimestamp is true', () => {
       const options: PinoTinyOptions = { hideTimestamp: true }
       const result = format(mockLogData, options)
-      expect(result).not.toContain('18:17:12')
+      expect(result).not.toContain('16:17:12')
       expect(result).toContain('Test message')
     })
 
@@ -195,6 +195,23 @@ describe('pino-tiny logger', () => {
       }
       const result = format(mockLogData, options)
       expect(result).toBeUndefined()
+    })
+
+    it('should filter loggerName from showObjects output', () => {
+      const logWithLoggerName = {
+        ...mockLogData,
+        loggerName: 'app-logger',
+        additionalField: 'should-be-shown'
+      }
+      const options: PinoTinyOptions = { showObjects: true }
+      const result = format(logWithLoggerName, options)
+
+      // Should not contain loggerName
+      expect(result).not.toContain('"loggerName"')
+      expect(result).not.toContain('app-logger')
+
+      // Should contain other additional fields
+      expect(result).toContain('"additionalField":"should-be-shown"')
     })
   })
 })
